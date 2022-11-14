@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctc.user.mapper.UserMapper">
+    <insert id="addUser" parameterType="user">
+        insert into user () values (null,#{username},#{password},#{chName});
+    </insert>
+    <update id="updateUserPassword">
+        update user
+        <set>
+            <if test="new_password != null">
+                password = #{new_password}
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+    <!--    <resultMap id="userMap" type="user">-->
+<!--        <id column="id" property="id"></id>-->
+<!--        <result column="username" property="username"></result>-->
+<!--        <result column="password" property="password"></result>-->
+<!--        <result column="ch_name" property="chName"></result>-->
+<!--    </resultMap>-->
+
+<!--  登录  -->
+    <select id="getUser" parameterType="user" resultType="user">
+        select * from laydb.user where username = #{username}
+    </select>
+
+
+    <!--  查询基本信息  -->
+<!--    <select id="getAll" resultType="user">-->
+<!--        select *-->
+<!--          from-->
+<!--          user,account,laydb.class-->
+<!--          where-->
+<!--          user.a_id = account.a_id and-->
+<!--          account.class_id = laydb.class.class_id-->
+<!--    </select>-->
+<!--    <select id="getAllById" resultType="com.ctc.user.pojo.User">-->
+<!--        select * from user,account,laydb.class-->
+<!--        where id = #{id} and user.a_id = account.a_id and-->
+<!--          account.class_id = laydb.class.class_id-->
+<!--    </select>-->
+</mapper>

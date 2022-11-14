@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctc.user.mapper.AccountMapper">
+    <resultMap id="getAccountAndAccountClassAndUserMap" type="account">
+        <id column="a_id" property="aId"></id>
+        <result column="a_name" property="aName"></result>
+        <result column="a_sex" property="aSex"></result>
+        <result column="a_sex" property="aSex"></result>
+        <result column="a_cid" property="aCid"></result>
+        <result column="a_num" property="aNum"></result>
+        <result column="a_qq" property="aQQ"></result>
+        <result column="a_wx" property="aWx"></result>
+        <result column="class_id" property="classId"></result>
+        <result column="user_id" property="userId"></result>
+        <association property="accountClass" javaType="accountClass">
+            <id column="class_id" property="classId"></id>
+            <result column="class_name" property="className"></result>
+        </association>
+        <association property="user" javaType="user">
+            <id column="id" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="password" property="password"></result>
+            <result column="ch_name" property="chName"></result>
+        </association>
+    </resultMap>
+        <insert id="addAccount" parameterType="account">
+        insert into account values(null,#{aCid},#{aName},#{aSex},#{aNum},#{aQQ},#{aWx},#{classId},#{userId})
+    </insert>
+    <update id="updateAccount" parameterType="account">
+        update account
+        <set>
+            <if test="aCid != null">
+                a_cid = #{aCid},
+            </if>
+            <if test="aName != null">
+                a_name = #{aName},
+            </if>
+            <if test="aSex != null">
+                a_sex = #{aSex},
+            </if>
+            <if test="aNum != null">
+                a_num = #{aNum},
+            </if>
+            <if test="aQQ != null">
+                a_qq = #{aQQ},
+            </if>
+            <if test="aWx != null">
+                a_wx = #{aWx},
+            </if>
+            <if test="classId != null">
+                class_id = #{classId},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+    <select id="getAccountAndAccountClassAndUser" resultMap="getAccountAndAccountClassAndUserMap">
+        select * from account,accountclass,user where user_id = #{id}
+        and accountclass.class_id = account.class_id and
+        user.id = account.user_id
+    </select>
+    <select id="getAccountByANameAndACid" resultType="account">
+        select * from account where a_cid = #{aCid} and a_name = #{aName}
+    </select>
+</mapper>
