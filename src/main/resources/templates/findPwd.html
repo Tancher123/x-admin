@@ -163,41 +163,6 @@
                 return false;
             });
 
-
-            var pwd = document.getElementById("password");
-            var nPwd = document.getElementById("newPassword");
-            var nMsg = document.getElementById("nMsg");
-            var msg = document.getElementById("msg");
-            //密码验证
-            pwd.onblur = function () {
-                if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
-                    $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-                    msg.style.display = "none";
-                    nPwdV();
-                } else {
-                    msg.style.display = "block";
-                    $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
-                    msg.innerText = "密码至少包含 数字和英文，长度6-20";
-                    return false;
-                }
-
-            };
-            //确认两次密码是否一样判断
-            function nPwdV() {
-                nPwd.onblur = function () {
-                    //不一样
-                    if (pwd.value != nPwd.value) {
-                        nMsg.style.display = 'block';
-                        $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
-                        return false;
-                    }
-                    //一样
-                    if (pwd.value == nPwd.value && /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
-                        $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-                        nMsg.style.display = 'none';
-                    }
-                };
-            }
             //填写新密码，成功找回密码，失败提示
             form.on('submit(formStep2)', function (data) {
                 //点击找回按钮后禁用
@@ -228,6 +193,51 @@
                window.location= ctxPath + 'login';
             });
         });
+</script>
+<script>
+
+
+    var pwd = document.getElementById("password");
+    var nPwd = document.getElementById("newPassword");
+    var nMsg = document.getElementById("nMsg");
+    var msg = document.getElementById("msg");
+    //密码验证
+    pwd.onblur = function () {
+        if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
+            $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+            msg.style.display = "none";
+            nPwdV();
+        } else {
+            msg.style.display = "block";
+            $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
+            msg.innerText = "密码至少包含 数字和英文，长度6-20";
+            return false;
+        }
+
+    };
+    //密码改变消失
+    pwd.oninput = function () {
+        if (pwd.value != null) {
+            $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+            msg.style.display = 'none';
+        }
+    };
+    //确认两次密码是否一样判断
+    function nPwdV() {
+        nPwd.onblur = function () {
+            //不一样
+            if (pwd.value != nPwd.value) {
+                nMsg.style.display = 'block';
+                $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
+                return false;
+            }
+            //一样
+            if (pwd.value == nPwd.value && /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
+                $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                nMsg.style.display = 'none';
+            }
+        };
+    }
 </script>
 </body>
 </html>
