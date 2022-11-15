@@ -120,15 +120,16 @@
         #captcha {
             cursor: pointer;
         }
-        .layui-layer-setwin{
+
+        .layui-layer-setwin {
             display: none;
         }
 
-        .toRegister{
+        .toRegister {
             font-size: 12px;
         }
 
-        tip{
+        tip {
             margin-top: 10px;
             line-height: 10px;
             font-size: 10px;
@@ -145,20 +146,20 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" id="username" name="username" lay-verify="required" placeholder="请输入用户名"
+                    <input type="text" id="username" name="username" value="" lay-verify="required" placeholder="请输入用户名"
                            autocomplete="off" class="layui-input">
                     <tip id="nameMsg" style="color: red;display: none"></tip>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
-                    <input type="password" id="password" name="password" lay-verify="required|password"
+                    <input type="password" id="password" name="password" value="" lay-verify="required|password"
                            lay-reqtext="密码不能为空"
                            placeholder="密码" class="layui-input">
                     <tip id="msg" style="color: red;display: none"></tip>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="newPassword"></label>
-                    <input type="password" id="newPassword" name="again_password" lay-verify="required"
+                    <input type="password" id="newPassword" value="" name="again_password" lay-verify="required"
                            lay-reqtext="确认密码不能为空"
                            placeholder="确认密码" class="layui-input">
                     <tip id="nMsg" style="color: red;display: none">两次密码不一致</tip>
@@ -220,49 +221,53 @@
         var nMsg = document.getElementById("nMsg");
         var msg = document.getElementById("msg");
         var nameMsg = document.getElementById("nameMsg");
+
         //账号验证
         username.onblur = function () {
             if (/^[a-zA-Z0-9_-]{6,16}$/.test(username.value)) {
                 $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
                 nameMsg.style.display = "none";
+                pwdV();
             } else {
                 nameMsg.style.display = "block";
                 $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
                 nameMsg.innerText = "用户名由6到16位字母，数字，下划线组成";
                 return false;
             }
-
         };
 
         //密码验证
-        pwd.onblur = function () {
-            if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
-                $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-                msg.style.display = "none";
-            } else {
-                msg.style.display = "block";
-                $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
-                msg.innerText = "密码至少包含 数字和英文，长度6-20";
-                return false;
-            }
-
-        };
+        function pwdV() {
+            pwd.onblur = function () {
+                if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
+                    $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                    msg.style.display = "none";
+                    nPwdV();
+                } else {
+                    msg.style.display = "block";
+                    $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
+                    msg.innerText = "密码至少包含 数字和英文，长度6-20";
+                    return false;
+                }
+            };
+        }
 
         //确认两次密码是否一样判断
-        nPwd.onblur = function () {
-            //不一样
-            if (pwd.value != nPwd.value) {
-                nMsg.style.display = 'block';
-                $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
-                return false;
-            }
-            //一样
-            if (pwd.value == nPwd.value) {
-                $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-                nMsg.style.display = 'none';
-            }
-        };
-
+        function nPwdV() {
+            nPwd.onblur = function () {
+                //不一样
+                if (pwd.value != nPwd.value) {
+                    nMsg.style.display = 'block';
+                    $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
+                    return false;
+                }
+                //一样
+                if (pwd.value == nPwd.value && pwd.value != '') {
+                    $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                    nMsg.style.display = 'none';
+                }
+            };
+        }
 
         // 进行注册操作
         form.on('submit(login)', function (data) {

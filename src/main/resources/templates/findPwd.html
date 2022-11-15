@@ -173,6 +173,7 @@
                 if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
                     $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
                     msg.style.display = "none";
+                    nPwdV();
                 } else {
                     msg.style.display = "block";
                     $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
@@ -181,21 +182,22 @@
                 }
 
             };
-
             //确认两次密码是否一样判断
-            nPwd.onblur = function () {
-                //不一样
-                if (pwd.value != nPwd.value) {
-                    nMsg.style.display = 'block';
-                    $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
-                    return false;
-                }
-                //一样
-                if (pwd.value == nPwd.value &&/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
-                    $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-                    nMsg.style.display = 'none';
-                }
-            };
+            function nPwdV() {
+                nPwd.onblur = function () {
+                    //不一样
+                    if (pwd.value != nPwd.value) {
+                        nMsg.style.display = 'block';
+                        $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
+                        return false;
+                    }
+                    //一样
+                    if (pwd.value == nPwd.value && /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
+                        $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                        nMsg.style.display = 'none';
+                    }
+                };
+            }
             //填写新密码，成功找回密码，失败提示
             form.on('submit(formStep2)', function (data) {
                 //点击找回按钮后禁用
