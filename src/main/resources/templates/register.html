@@ -260,17 +260,12 @@
     var msg = document.getElementById("msg");
     var nameMsg = document.getElementById("nameMsg");
 
-    if( /^[a-zA-Z0-9_-]{6,16}$/.test(username.value)
-        &&/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)
-        && pwd.value == nPwd.value
-        && pwd.value != '' ){
-        $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-    }
 
     //账号验证
     username.onblur = function () {
         if (/^[a-zA-Z0-9_-]{6,16}$/.test(username.value)) {
             nameMsg.style.display = "none";
+            $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
             pwdV();
         } else {
             nameMsg.style.display = "block";
@@ -285,6 +280,7 @@
         pwd.onblur = function () {
             if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(pwd.value)) {
                 msg.style.display = "none";
+                $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
                 nPwdV();
             } else {
                 msg.style.display = "block";
@@ -313,6 +309,7 @@
             //一样
             if (pwd.value == nPwd.value && pwd.value != '') {
                 nMsg.style.display = 'none';
+                $("#btn-submit").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
             }
         };
     }
