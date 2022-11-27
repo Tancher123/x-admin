@@ -12,6 +12,7 @@
             height: 30px;
             margin: 0 auto;
             background-color: #663620;
+            position: relative;
         }
 
         .box1{
@@ -115,7 +116,7 @@
             <span class="three"></span>
             <span class="txt">秒</span>
         </div>
-        <span style="position: absolute; top: 57px;left: 420px;font-weight: bold; font-size: 20px;color: red">距离过年还有：</span>
+        <span style="position: absolute; top: 2px;left: -135px;font-weight: bold; font-size: 20px;color: red">距离除夕还有：</span>
     </div>
     <div class="title">
         <h1><span style="color: crimson;">My</span> Homepage</h1>
@@ -143,6 +144,27 @@
             box.children[6].innerHTML = s;
         });
     });
+
+
+    //示范一个公告层
+  window.onload =  layer.open({
+        type: 1
+        ,title: false //不显示标题栏
+        ,closeBtn: false
+        ,area: '300px;'
+        ,shade: 0.8
+        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+        ,resize: false
+        ,btn: ['俺知道啦']
+        ,btnAlign: 'c'
+        ,moveType: 1 //拖拽模式，0或者1
+        ,content: '<div style="padding: 20px; line-height: 40px; background-color: #393D49; color: #fff; font-weight: 300;">说明:每个用户注册默认是普通用户<br>功能:<br>1、常规管理>员工管理>员工列表<br>2、账号管理>修改密码<br/>3、普通用户>基本信息和退出登录<br>其他功能尚未开发</div>'
+        ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+
+        }
+    });
+
 </script>
 </body>
 </html>

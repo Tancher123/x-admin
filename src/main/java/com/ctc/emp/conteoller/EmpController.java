@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +69,15 @@ public class EmpController {
     //批量删除员工
     @DeleteMapping("/{ids}")
     @ResponseBody
-    public Result<Object> deleteEmpByIds(@PathVariable("ids")int[] ids){
+    public Result<Object> deleteEmpByIds(@PathVariable("ids")int[] ids,
+                                         HttpServletRequest request){
+
+        Object loginChName = request.getSession ( ).getAttribute ( "loginChName" );
+
+        if ( loginChName.equals ( "普通用户" ) || loginChName == "普通用户" ){
+            return Result.fail ( "您没权限，请联系管理员！" );
+        }
+
         int i = empService.deleteEmpByIds(ids);
         if ( i > 0 ){
             return Result.success ( "删除成功！" );
@@ -88,7 +97,14 @@ public class EmpController {
     //修改员工
     @PutMapping("")
     @ResponseBody
-    public Result<Object> updateEmp(Emp emp){
+    public Result<Object> updateEmp(Emp emp,
+                                    HttpServletRequest request){
+        Object loginChName = request.getSession ( ).getAttribute ( "loginChName" );
+
+        if ( loginChName.equals ( "普通用户" ) || loginChName == "普通用户" ){
+            return Result.fail ( "您没权限，请联系管理员！" );
+        }
+
         int i = empService.updateEmp(emp);
         if ( i > 0 ){
             return Result.success ( "员工信息修改成功！" );
