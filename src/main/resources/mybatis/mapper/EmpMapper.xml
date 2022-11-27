@@ -35,7 +35,6 @@
         </where>
     </sql>
 
-
     <!--  新增员工信息  -->
     <insert id="addEmp" parameterType="emp">
         insert into emp values(null,#{name},#{sex},#{age},#{sal},#{birthday},#{address},#{deptId})
