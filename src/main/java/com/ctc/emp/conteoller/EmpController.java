@@ -59,6 +59,9 @@ public class EmpController {
         if ( StringUtils.isEmpty ( birthday ) ){
             return Result.fail ( "不能为空！" );
         }
+        if ( emp.getAge () > 120 || emp.getAge () <0 ){
+            return Result.fail ( "您输入的年龄不合法，请确认后再输入！" );
+        }
         int i = empService.addEmp ( emp );
         if ( i > 0 ){
             return Result.success ( "添加成功！" );
@@ -103,6 +106,10 @@ public class EmpController {
 
         if ( loginChName.equals ( "普通用户" ) || loginChName == "普通用户" ){
             return Result.fail ( "您没权限，请联系管理员！" );
+        }
+
+        if ( emp.getAge () > 120 || emp.getAge () <0 ){
+            return Result.fail ( "您输入的年龄不合法，请确认后再输入！" );
         }
 
         int i = empService.updateEmp(emp);
